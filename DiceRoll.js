@@ -1,49 +1,61 @@
-const buttonEl = document.getElementById("roll-button");
-const diceEl = document.getElementById("dice");
-const rollHistoryEl = document.getElementById("roll-history");
-let historyList = [];
+const btnEl = document.getElementById("btn");
+const containerEl = document.querySelector(".container");
+const diceEl = document.querySelector(".dice")
+const styleSheet = document.styleSheets[0];
+const frontEl = document.querySelector(".front");
+const h1El = document.querySelector("h1");
 
-function rolldice(){
-    const rollResult = Math.floor(Math.random()*6)+1;
-    const diceFace = getDiceFace(rollResult);
-    diceEl.innerHTML = diceFace;
-    historyList.push(rollResult);
-    updateRollHostory()
-}
 
-function updateRollHostory(){
-    rollHistoryEl.innerHTML = "";
-    for(let i = 0; i < historyList.length ; i++){
-        const listItem = document.createElement("li");
-        listItem.innerHTML = `Roll${i+1}: <span>${getDiceFace(historyList[i])}</span`;
-        rollHistoryEl.appendChild(listItem)
-    }
 
-}
 
-function getDiceFace(rollResult){
-    switch(rollResult){
-        case 1 :
-            return "&#9856;";
-        case 2 :
-            return "&#9857;";
-        case 3 :
-            return "&#9858;";
-        case 4 :
-            return "&#9859;";
-        case 5 :
-            return "&#9860;" ;
-        case 6 :
-            return "&#9861;";
-        default:
-            return "";
-    }   
-}
+const face = [
+    "&#9856;",
+    "&#9857;",
+    "&#9858;",
+    "&#9859;",
+    "&#9860;",
+    "&#9861;",
+]
+diceEl.style.display = "none";
 
-buttonEl.addEventListener("click", ()=>{
-    diceEl.classList.add("roll-animation");
-    setTimeout(() => {
-        diceEl.classList.remove("roll-animation");
-        rolldice()
-    },1000);
+
+btnEl.addEventListener("click", ()=>{
+    downAction()
+    diceEl.style.animation = "none";
+    requestAnimationFrame(()=>{
+        updataDice()
+        diceEl.style.animation = "rotate  3s ease forwards";
+    })
+    
 })
+
+function updataDice(){
+    containerEl.style.boxShadow = "none"
+    const randomFace = Math.floor(Math.random()*face.length);
+    styleSheet.insertRule(`
+        @keyframes rotate{
+            0%{
+                transform:rotateX(0deg) rotateY(0deg);
+            }
+            100%{
+                transform:rotateX(360deg) rotateY(360deg);
+            }
+        }`)
+    setTimeout(() => {
+        frontEl.innerHTML = face[randomFace];
+        setTimeout(() => {
+            containerEl.style.boxShadow = "4px 8px 10px rgba(0,0,0,.3)"
+        },500);
+        
+    }, 1500);
+}
+
+function downAction(){
+    containerEl.style.top = "300px";
+    containerEl.style.transition = "top 1.5s ease-out";
+    h1El.style.top = "150px";
+    h1El.style.transition = "top 1.5s ease-out";
+    setTimeout(()=>{
+        diceEl.style.display = "flex"
+    }, 100)
+}
