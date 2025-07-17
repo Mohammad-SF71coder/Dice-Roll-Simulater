@@ -18,7 +18,6 @@ const face = [
 ]
 diceEl.style.display = "none";
 
-
 btnEl.addEventListener("click", ()=>{
     downAction()
     diceEl.style.animation = "none";
