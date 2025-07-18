@@ -17,4 +17,3 @@ This project displays a 3D dice that spins and drops realistically when pressing
 - Random display of the dice face.
 - Responsive design suitable for both large and small screens.
 - Visual effects like shadow and smooth transitions.
-- Dice roll sound effect to enhance user experience.
